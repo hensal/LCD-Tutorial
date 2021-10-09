@@ -1,0 +1,89 @@
+extern unsigned char TITL12[32] = "save the money ";
+extern unsigned char TITL13[32] = "enjoy the life  3452 ";
+
+extern unsigned char TITL14[32] = "save the money ";
+extern unsigned char TITL15[32] = "enjoy the life 3078  ";
+
+extern unsigned char TITL16[32] = "save the money ";
+extern unsigned char TITL17[32] = "enjoy the life  2054 ";
+
+
+void dispset_titl1(type)
+{
+	unsigned char n;
+	unsigned char dsp_buf;
+
+	switch(type){
+		case title1 :
+			lcd_l1(0);				//1行目先頭アドレスセット
+			for (n=0 ;n<16 ;n++) {
+				dsp_buf = TITL12[n];		//line 1
+				lcd_dout(dsp_buf);		//1data write
+			}
+
+			lcd_l2(0);				//2行目先頭アドレスセット
+			for (n=0 ;n<16 ;n++) {
+				dsp_buf = TITL13[n];		//line 2
+				lcd_dout(dsp_buf);		//1data write
+			   }
+		case title2:
+			lcd_l1(0);				//1行目先頭アドレスセット
+			for (n=0 ;n<16 ;n++) {
+				dsp_buf = TITL14[n];		//line 1
+				lcd_dout(dsp_buf);		//1data write
+			}
+
+			lcd_l2(0);				//2行目先頭アドレスセット
+			for (n=0 ;n<16 ;n++) {
+				dsp_buf = TITL15[n];		//line 2
+				lcd_dout(dsp_buf);		//1data write
+			   }
+
+		case title3:
+			lcd_l1(0);				//1行目先頭アドレスセット
+			for (n=0 ;n<16 ;n++) {
+				dsp_buf = TITL17[n];		//line 1
+				lcd_dout(dsp_buf);		//1data write
+			}
+
+			lcd_l2(0);				//2行目先頭アドレスセット
+			for (n=0 ;n<16 ;n++) {
+				dsp_buf = TITL18[n];		//line 2
+				lcd_dout(dsp_buf);		//1data write
+			   }
+
+		default:
+			break;
+	}
+
+	
+
+
+	
+}
+
+
+void op_switich_mdoef(void)
+{
+	if (modef == 1)
+	{		                          // when button is pressed       
+             if (count == 0)
+		{                                                      //   increment count and
+		count++;
+		delay_msec(100);
+	        dispset_titl1(title1);                    //   perform   function	         
+		modef = 0                
+		}
+	     else if (count == 1) {                          // on second press
+		       count++;                                           //   increment count and
+		       delay_msec(100);
+		       dispset_titl1(title2);                                  //   perform another function,
+                       modef = 0		
+		} 
+	     else if (count == 2) {                          // on second press
+		      count ==0;		     	
+		      dispset_titl1(title3);  
+                      modef = 0		
+		} 
+    	} 
+}
