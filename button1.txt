@@ -1,0 +1,25 @@
+void op_switich_mdoef(void)
+{	count = 0        //must be declare as global
+	if (modef == 1)
+	{		                          // when button is pressed       
+             if (count == 0)
+		{                                                      //   increment count and
+		count++;
+		delay_msec(100);
+	        dispset_titl1();                    //   perform   function	         
+		modef = 0                
+		}
+	     else if (count == 1) {                          // on second press
+		       count++;                                           //   increment count and
+		       delay_msec(100);
+		       lcd_cout(0x01);                                 //   perform another function,
+                       modef = 0		
+		} 
+	     else if (count == 2) {                          // on second press
+		      count =0;
+		      set_cursor_position (1, 0);	
+		      lcd_cout(0x0f);
+                      modef = 0		
+		} 
+    	} 
+}
