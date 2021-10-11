@@ -1,0 +1,77 @@
+extern unsigned char TITL0[32] = "Try your best 2021";
+extern unsigned char TITL1[32] = "work hard   2053";
+
+extern unsigned char TITL2[32] = "save the nature ";
+extern unsigned char TITL3[32] = "save the life   ";
+
+void dispset_titl(char type)
+{
+	unsigned char n;
+	unsigned char dsp_buf;
+   
+switch(type) {
+	case "title1":
+	        lcd_l1(0);				//1s–Úæ“ªƒAƒhƒŒƒXƒZƒbƒg
+	        for (n=0 ;n<16 ;n++) {
+		         dsp_buf = TITL10[n];		//line 1
+		         lcd_dout(dsp_buf);		//1data write
+	}	
+	        lcd_l2(0);				//2s–Úæ“ªƒAƒhƒŒƒXƒZƒbƒg
+	        for (n=0 ;n<16 ;n++) {
+		         dsp_buf = TITL11[n];		//line 2
+		          lcd_dout(dsp_buf);		//1data write
+	   }
+		   break;
+	  case "title2":
+	        lcd_l1(0);				//1s–Úæ“ªƒAƒhƒŒƒXƒZƒbƒg
+	        for (n=0 ;n<16 ;n++) {
+		         dsp_buf = TITL0[n];		//line 1
+		         lcd_dout(dsp_buf);		//1data write
+	}	
+	        lcd_l2(0);				//2s–Úæ“ªƒAƒhƒŒƒXƒZƒbƒg
+	       for (n=0 ;n<16 ;n++) {
+		         dsp_buf = TITL1[n];		//line 2
+		          lcd_dout(dsp_buf);		//1data write
+	   }  
+	            break;
+	   case "title3":
+	        lcd_l1(0);				//1s–Úæ“ªƒAƒhƒŒƒXƒZƒbƒg
+	        for (n=0 ;n<16 ;n++) {
+		         dsp_buf = TITL2[n];		//line 1
+		         lcd_dout(dsp_buf);		//1data write
+	}	
+	        lcd_l2(0);				//2s–Úæ“ªƒAƒhƒŒƒXƒZƒbƒg
+	       for (n=0 ;n<16 ;n++) {
+		         dsp_buf = TITL3[n];		//line 2
+		          lcd_dout(dsp_buf);		//1data write
+	   }   
+	                      break;
+	       default:
+	       break;
+     }
+}
+
+I have called the dispet_titl in main function as: dispset_titl('t');    what arguments should passed here?
+ERROR:expression on the "title1","title2","title3" must have integral value.
+
+
+void op_switich_mdoef(void)
+{	
+	if (modef == 1){		                          // when button is pressed       
+              if (count == 0) {                                                      //   increment count and
+	            count++;
+		     delay_msec(100);
+                     dispset_titl1(title1);                     //   perform   function
+	             modef=0;	         
+        }  else if (count == 1) {                          // on second press
+                     count++;                                           //   increment count and
+	             delay_msec(100);
+                      dispset_titl1(title2);                                    //   perform another function,
+	             modef=0;
+        } else if (count == 2) {                          // on second press
+	              dispset_titl1(title3);          
+        } 
+    } 
+}
+
+ERROR on modef function: In this dispset_titl1(title1) functions contains to many arguments.and title1 is undefined.
