@@ -30,3 +30,33 @@ int op_switich_leftf(void)
 	} 
 	return num;
 }
+
+case: set the cursor 
+
+
+int dispset_titl(void)
+{
+	unsigned char n;
+	unsigned char dsp_buf;
+	
+	        lcd_l1(0);				                 //1s–Úæ“ªƒAƒhƒŒƒXƒZƒbƒg
+	        for (n=0 ;n<16 ;n++) {
+		         dsp_buf = TITL10[n];		   //line 1
+		         lcd_dout(dsp_buf);		   //1data write
+	}	
+	        lcd_l2(0);				                //2s–Úæ“ªƒAƒhƒŒƒXƒZƒbƒg
+	        for (n=0 ;n<16 ;n++) {
+		         dsp_buf = TITL11[n];		  //line 2
+		          lcd_dout(dsp_buf);		  //1data write
+	   }
+		return dsp_buf;
+}
+and for the button as:
+
+void op_switich_upf(void)
+{		 
+      if (upf == 1) {
+	      num = dispset_titl();
+               //num = num ++;
+	    }	
+}
