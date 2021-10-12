@@ -1,4 +1,4 @@
-
+Case:from the cursor  8th position to up 16th postion:
 int op_switich_leftf(void)
 {	
 	if (leftf == 1){
@@ -10,6 +10,23 @@ int op_switich_leftf(void)
 		second = second+1;
 		leftf = 0;		
 	    }	} while(second<=8);
+	} 
+	return num;
+}
+
+
+Case:for the cursor upto 8th position:
+
+int op_switich_leftf(void)
+{	
+	if (leftf == 1) {
+		if( (first>0)&&(second<=8)) {
+		num = set_cursor_position (first, second);	
+		lcd_cout(0x0f);
+		first = 1;
+		second = second+1;
+		leftf = 0;		
+	    }	
 	} 
 	return num;
 }
