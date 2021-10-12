@@ -75,3 +75,6 @@ void op_switich_mdoef(void)
 }
 
 ERROR on modef function: In this dispset_titl1(title1) functions contains to many arguments.and title1 is undefined.
+
+for the increment of thte cursor value:
+https://www.ccsinfo.com/forum/viewtopic.php?t=49365
