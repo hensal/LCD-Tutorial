@@ -1,0 +1,15 @@
+
+int op_switich_leftf(void)
+{	
+	if (leftf == 1){
+		do {
+		if (first>0){
+		num = set_cursor_position (first, second);	
+		lcd_cout(0x0f);
+		first = 1;
+		second = second+1;
+		leftf = 0;		
+	    }	} while(second<=8);
+	} 
+	return num;
+}
