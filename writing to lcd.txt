@@ -1,0 +1,9 @@
+Code:
+extern unsigned char LIne1[32] = "Hello, World";
+extern unsigned char Line2[32] = "9567   ";
+
+void write_string(uint8 line, uint8 col, const char * str) {
+     [implementation]
+}
+and then call your function:
+write_string(0, 2, Line1]; // Write "hello, world" centered on first line.
