@@ -1,0 +1,10 @@
+int counter = 0x30;
+
+void op_switich_upf(void)
+{		 
+      if (upf == 1) { 
+	      temp = counter+1;	      
+	      lcd_dout(temp);
+	      upf = 0;
+         }
+}
