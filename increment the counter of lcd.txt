@@ -1,0 +1,47 @@
+https://www.edaboard.com/threads/lcd-increment-decrement-help-urgent.271881/
+
+Code:
+void IntToStr(unsigned int intval);
+
+//Global variables
+unsigned int counter = 0;
+unsigned char myString[6];
+
+void IntToStr(unsigned int intval) {
+        myString[0] = (befdec/10000) + 48;
+        myString[1] = (befdec/1000)%10 + 48;
+        myString[2] = (befdec/100)%10 + 48;
+        myString[3] = (befdec/10)%10 + 48;
+        myString[4] = (befdec/1)%10 + 48;
+	myString[5] = '\0';
+}
+
+void main() {
+
+while(1) {
+
+if(PORTAbits.RA1 == 1) {
+	Delay10TCYx (150);
+	if(PORTAbits.RA1 == 1) {
+                if(counter <= 65535) {
+                            counter++;
+                }
+		
+	}
+}
+else if(PORTCbits.RC1 == 1) {
+	Delay10TCYx (150);
+	if(PORTCbits.RC1 == 1) {
+		 if(counter >= 0) {
+                            counter--;
+                }
+	}
+}
+
+
+IntToStr(counter);
+//myString contains the string equivalent of counter's value.
+//Send it to LCD
+
+}
+}
