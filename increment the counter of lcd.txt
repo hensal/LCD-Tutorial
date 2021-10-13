@@ -45,3 +45,15 @@ IntToStr(counter);
 
 }
 }
+
+*In brief:
+When sending data to LCD you should keep in mind that to LCD meaningful data is ASCII characters.
+But you have used unsigned int which is a decimal value.
+So you should make a conversion before sending it to LCD.
+the conversion is as follows:
+if X=100;
+lcd_data((X/100)+0x30);
+lcd_data(((X%100)/10)+0x30);
+lcd_data((X%10)+0x30);
+In this manner you can display the value 100 in LCD as 100 itself
+
