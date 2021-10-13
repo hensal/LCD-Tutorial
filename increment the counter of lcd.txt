@@ -46,7 +46,7 @@ IntToStr(counter);
 }
 }
 
-*In brief:
+*In brief:https://www.edaboard.com/threads/increment-count-on-lcd-display.270837/
 When sending data to LCD you should keep in mind that to LCD meaningful data is ASCII characters.
 But you have used unsigned int which is a decimal value.
 So you should make a conversion before sending it to LCD.
