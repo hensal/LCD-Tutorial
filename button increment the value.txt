@@ -1,0 +1,48 @@
+C Program Push button counts continuously when pushed for a long time
+Asked 6 years, 7 months ago
+Active 6 years, 7 months ago
+Viewed 4k times
+
+1
+link   https://stackoverflow.com/questions/28844521/c-program-push-button-counts-continuously-when-pushed-for-a-long-time
+
+It counts from 0 to 3 only. Adds 1 when down is pressed and subtracts 1 when up is pressed. The problem is when i hold it, it counts continuously. I want it to count only once even if i hold the push button for a long time. I'm using ATMEL SAM3X microcontroller if that helps. And that the push buttons are logic 0.
+
+#include "..\ASF\common\services\gpio\sam_gpio\sam_gpio.h"
+#include "delay.h"
+#include "sam3x_ek.h"
+#include "Press_Counter.h"
+
+signed int UP_DOWN;
+signed int LEFT_RIGHT;
+
+void Press_Counter()
+{
+    unsigned int Button_State;
+    Button_State=1;
+
+    if(UP)                  //if UP is pressed
+    {
+        delay_ms(50);
+        if(Button_State==1)
+        {
+            UP_DOWN--;      //decrement
+            if (UP_DOWN<0)
+            {
+                UP_DOWN=0;  // To ensure that the minimum value is 0
+            }
+        }
+        Button_State=0;
+    }
+
+    else if(DOWN)           //if DOWN is pressed
+    {
+        delay_ms(50);
+        if(Button_State==1)
+        {
+            UP_DOWN++;      //increment
+            if (UP_DOWN>3)
+            {
+                UP_DOWN=3;  // To ensure that the maximum value is 3
+            }
+        }
