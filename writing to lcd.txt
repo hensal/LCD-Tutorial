@@ -27,3 +27,17 @@ void dispset_titl(void)
 	    write_string(60, 61, Line11); 
 	    delay_msec(100);
 }
+
+[OR] TO display on both line.
+void write_string(uint_fast8_t row, uint_fast8_t col, unsigned const char  *str) {
+    int x,y;
+    lcd_cout(0xc0);
+    for (x=0; Line11[x]!=0; x++) {	    
+        lcd_dout(Line11[x]);  
+	//lcd_dout(Line12[x]);
+    }
+    lcd_cout(0x80);
+     for (y=0; Line12[y]!=0; y++) {	
+    lcd_dout(Line12[y]);
+     }
+}
