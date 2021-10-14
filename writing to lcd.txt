@@ -10,3 +10,20 @@ write_string(0, 2, Line1]; // Write "hello, world" centered on first line.
 
 
 https://www.8051projects.net/lcd-interfacing/lcd-custom-character.php
+
+
+To write to the second line :
+
+void write_string(uint_fast8_t row, uint_fast8_t col, unsigned const char  *str) {
+    int x,y;
+    lcd_cout(0xc0);
+    for (x=0; Line11[x]!=0; x++) {	    
+        lcd_dout(Line11[x]);  
+	
+    }
+}
+void dispset_titl(void)
+{   				
+	    write_string(60, 61, Line11); 
+	    delay_msec(100);
+}
