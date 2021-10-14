@@ -7,3 +7,6 @@ void write_string(uint8 line, uint8 col, const char * str) {
 }
 and then call your function:
 write_string(0, 2, Line1]; // Write "hello, world" centered on first line.
+
+
+https://www.8051projects.net/lcd-interfacing/lcd-custom-character.php
