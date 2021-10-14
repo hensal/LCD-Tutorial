@@ -41,6 +41,23 @@ void write_string(uint_fast8_t row, uint_fast8_t col, unsigned const char  *str)
     lcd_dout(Line12[y]);
      }
 }
+[OR]To display on both line but......
+void write_string(uint_fast8_t row, uint_fast8_t col, unsigned const char  *str) {
+    int x,y;                                          	 
+		  if (row)
+		                {
+			            col |= 0x40;				    
+				    } 
+				    col |= 0x80;
+				    lcd_cout (col); 	
+		 for (x=0; Line11[x]!=0; x++) {	    
+                                  lcd_dout(Line11[x]);  
+		 }
+	        for (y=0; Line12[y]!=0; y++) {	
+                                  lcd_dout(Line12[y]);
+                          }
+       }
+
 
 [OR]To display in the specified  location:
 void write_string(uint_fast8_t row, uint_fast8_t col, unsigned const char  *str) {
