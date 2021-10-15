@@ -11,6 +11,7 @@ void op_switich_upf(void)
 
 [OR] another method:
 
+
 int write_string(uint_fast8_t row, uint_fast8_t col, unsigned const char  *str) {
     int x,y;                                          	 
 		  if (row)
@@ -19,7 +20,7 @@ int write_string(uint_fast8_t row, uint_fast8_t col, unsigned const char  *str) 
 				    } 
 				    col |= 0x80;
 				    lcd_cout (col); 
-	        for(y=0;Line11[y]!=0;y++) {
+	        for(y=0;Line12[y]!=0;y++) {
 		temp= lcd_dout(Line12[y]);
 		}
                              
@@ -27,11 +28,11 @@ int write_string(uint_fast8_t row, uint_fast8_t col, unsigned const char  *str) 
 		return 0;
        }
 
-void op_switich_upf(void)
-{	int y,let;
-      if (upf == 1) {   
-	      temp = temp+1;
-	    let =  lcd_dout(temp);
+void op_switich_upf(void){	
+      if (upf == 1) {   	 
+	      temp = temp+1;	    
+	      lcd_dout(temp);
+	      set_cursor_position (1, 0);	
 	      upf = 0;
-         }
+	      }      
 }
