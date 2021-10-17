@@ -1,0 +1,91 @@
+#include <htc.h>
+#define _XTAL_FREQ 20000000    //Oscillator frequency
+#define en RD7                 //Lcd Controlling Pins
+#define rs RD6
+#define rw RD5
+
+void delay(unsigned int time)  //Time delay function
+{
+unsigned int i,j;
+for(i=0;i< time;i++)
+for(j=0;j< 5;j++);
+}
+
+             //Function for sending values to the command register of LCD
+void lcdcmd(unsigned char value)  
+{
+PORTB=value;
+rs= 0;           //register select-rs 
+rw = 0;          //read-write-rd
+en = 1;          //enable-e
+delay(50);
+en=0;            //enable-e
+delay(50);
+
+}
+             //Function for sending values to the data register of LCD
+void display(unsigned char value)  
+{
+PORTB=value;
+rs= 1;       //register select-rs 
+rw= 0;       //read-write-rd
+en= 1;       //enable-e
+delay(500);
+en=0;        //enable-e
+delay(50);
+
+}
+             //function to initialize the registers and pins of LCD
+             //always use with every lcd of hitachi
+void lcdint(void)         
+{
+TRISB=0x00;    //Port 1 is used as output port             
+TRISD5=0;      //Lcd Controlling pins as output
+TRISD6=0;
+TRISD7=0; 
+delay(15000);
+display(0x30);
+delay(4500);
+display(0x30);
+delay(300);
+display(0x30);
+delay(650);
+lcdcmd(0x38);
+delay(50);
+lcdcmd(0x0C);
+delay(50);
+lcdcmd(0x01);
+delay(50);
+lcdcmd(0x06);
+delay(50);
+lcdcmd(0x80);
+delay(50);
+}
+
+void main()
+{
+char i;
+unsigned int j,k;
+j=0;k=0;
+i=j/10;
+i=i-0x30;
+lcdint();
+
+while(j!=255){
+display(i);
+j++;i++;k++;
+
+if(k==15){         //Displaying characters on first line of lcd
+lcdcmd(0xC0);
+}
+
+if(k==31){        //Displaying characters on second line of lcd
+lcdcmd(0x80);
+k=0;
+lcdcmd(0x01);     //Clear Lcd
+}
+
+delay(12000);
+}//End While
+
+}
