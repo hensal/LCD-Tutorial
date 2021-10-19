@@ -36,3 +36,60 @@ void op_switich_upf(void){
 	      upf = 0;
 	      }      
 }
+
+[OR]
+
+int count = 0;
+int first = 1;
+int second = 0;
+int temp = 0;
+
+int set_cursor_position (uint_fast8_t row, uint_fast8_t col)                                                 
+	       {		 	 
+		  if (row)
+		                {
+			            col |= 0x40;				    
+				    } 
+				    col |= 0x80;
+				    lcd_cout (col); 	
+				    return 0;
+	       }
+	       
+int display1(void)
+{
+	unsigned char n;
+	unsigned char dsp_buf;
+	
+	lcd_l1(0);				
+	        for (n=0 ;n<16 ;n++) {
+		         dsp_buf = Data0[n];		
+		         lcd_dout(dsp_buf);		
+	}  				
+	     write_string(1, 0, Data2); 
+	    delay_msec(100);   
+	   //  write_string(1, 1, D2c);  	 
+	   return 0;
+}
+	       
+int write_string(uint_fast8_t row, uint_fast8_t col, unsigned const char  *str) {
+    int y;                                          	 
+		  if (row)
+		                {
+			            col |= 0x40;				    
+				    } 
+				    col |= 0x80;
+				    lcd_cout (col); 
+				    
+	        while (*str)
+		temp = lcd_dout(*str++);  
+		return 0;                  		
+       }
+
+void op_switich_upf(void){	
+      if (upf == 1) {   	 
+	      temp = temp+1;	    
+	      lcd_dout(temp);
+	      set_cursor_position (1, 0);	
+	      upf = 0;
+	      }      
+}
