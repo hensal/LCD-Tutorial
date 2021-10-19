@@ -1,0 +1,31 @@
+int n=0;
+foreach (char a in str)
+{
+    if (a >= '0' && a <= '9')
+          n++;
+}
+Just use this.
+Explanation: Code of ASCII character 0 is 48 and character 9 is 57 (here you can find all character codes) and when you're comparing characters in C# it compares their's codes.
+You could write if (a >= 48 && a <= 57)) and it would work as well. Hope it helped.
+EDIT: I read your comment.
+
+for(int = 1; i < str.length-1; i++)
+{
+    if(Char.IsDigit(str[i])) &&
+       !Char.IsDigit(str[i-1]) &&
+       !Char.IsDigit(str[i+1]))
+        n++;
+}
+After this you should check first and last characters. That's all.
+
+
+void op_switich_upf(void){	
+      if (upf == 1) {   	 
+	      if (temp >= 48 && temp <= 56) {
+	      temp = temp+1;
+	      lcd_dout(temp);
+		set_cursor_position (1, 0);
+	      upf = 0;
+	      } 
+      }     
+}
