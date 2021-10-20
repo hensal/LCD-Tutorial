@@ -1,0 +1,51 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdint.h>
+ 
+typedef enum{
+     mode_key = 0x00,
+     up_key,
+     down_key,
+     left_key,
+     right_key,
+     set_key,
+     nb_key
+}key_t;
+ 
+ 
+ 
+const char key_pressed[] = {"mode_key","up_key", "down_key", "left_key", "right_key", "set_key"};
+
+uint8_t get_index_key(const char * key)
+{
+     for(uint8_t i; i < nb_key; i++)
+    {
+         if(strcmp(key,key_pressed[i]) == 0)
+             break;
+     }
+     return i;
+}
+
+
+ int main(void)
+{
+ 
+    key_t var_key_str; 
+    /*******************/
+    switch(get_key_index(var_key_str))
+   {
+         case mode_key:
+             /* do something*/
+             break;
+         case left_key:
+       etc…
+       break;
+ 
+     default:
+ 
+       break;
+  }
+
+ 
+}
+ 
