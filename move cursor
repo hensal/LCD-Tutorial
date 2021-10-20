@@ -1,0 +1,40 @@
+for the second line in 16x2 lcd, where function is as :(row,column)
+int set_cursor_position (uint_fast8_t row, uint_fast8_t col)                                                 
+	       {		 	 
+		  if (row)
+		                {
+			            col |= 0x40;				    
+				    } 
+				    col |= 0x80;
+				    lcd_cout (col); 	
+				    return 0;
+	       }
+	       	 
+
+int first = 1;
+int second = 0;
+void op_switich_leftf(void)
+{	
+	if (leftf == 1) {		
+		if( first>=1 && second <=15 ) {
+		set_cursor_position (first, second);	
+		lcd_cout(0x0f);
+		first = 1;
+		second = second+1;
+		leftf = 0;		
+	      }	
+	  } 
+}
+
+void op_switich_rightf(void)
+{	
+	if (rightf == 1){
+		if ( first>=1 && second > 0){
+		first =1;
+		second = second -1;
+		set_cursor_position (first, second);	
+		lcd_cout(0x0f);
+		rightf =0;
+	    }
+	}
+}
