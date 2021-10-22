@@ -29,3 +29,33 @@ void op_switich_leftf(void)
 	}
 }
 
+[OR]:best way to blink the cursor when both button is pressed
+
+void op_switich_rightf(void)
+{	
+	if (rightf == 1) {		
+		if( second>1 && second <=4 ) {
+		set_cursor_position (first,second);	
+		lcd_cout(0x0f);
+		first = 1;
+		second = second+1;	
+		if(second	>4) second =2;		
+	      }	
+		rightf = 0;	
+     	} 
+}
+
+void op_switich_leftf(void)
+{	
+	if (leftf == 1){
+		if ( second>1 && second <=4){	
+	        set_cursor_position (first, second);
+		lcd_cout(0x0f);
+		first =1;
+		second = second -1;
+		if(second	<2) second =4;			
+	      }
+	   leftf =0;
+	}
+}
+
