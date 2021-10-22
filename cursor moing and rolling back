@@ -1,4 +1,6 @@
 
+int first = 1;
+int second = 2;
 void op_switich_rightf(void)
 {	
 	if (rightf == 1) {		
