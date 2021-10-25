@@ -1,0 +1,26 @@
+void op_switich_upf(void)           //increment
+{	         	
+        if (upf == 1) {	
+		        //set_cursor_position (1, 2);			  
+	                if (temp >= 48 && temp < 58)  {			    
+	                 temp = temp+1;
+	                 if(temp > 57) temp = 48 ;
+	                 lcd_dout(temp);     
+			 set_cursor_position (1, 2);	
+			 upf = 0;			
+		    }
+	}
+  
+  
+void op_switich_downf(void)               //decrement
+{		
+	if (downf == 1) {
+		   if (temp >= 47 && temp <58 ) {
+		   temp = temp -1;
+		   if(temp < 48) temp = 57 ;
+		   value = lcd_dout(temp);
+		   set_cursor_position (1, 2);		  
+	            }	
+		  downf = 0;
+	}
+}
