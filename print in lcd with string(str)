@@ -1,0 +1,107 @@
+#include <stdio.h>
+#include <string.h>            
+
+unsigned char one[8] = "A";
+unsigned char one1[8] = "B";
+unsigned char one12[8] = "c";
+
+void lcd_init(void)
+{
+    P7 = 0x00;      //E=0,RS=0
+
+    P7 = 0x03;
+    P7 = 0x23;      //E=1,RS=0
+    delay_micro(100);
+    P7 = 0x03;      //E=0,RS=0
+    delay_msec(5);
+    P7 = 0x23;      //E=1,RS=0
+    delay_micro(100);
+    P7 = 0x03;      //E=0,RS=0
+    delay_msec(5); 
+    P7 = 0x23;      //E=1,RS=0
+    delay_micro(100);
+    P7 = 0x03;      //E=0,RS=0
+    lcd_cout(0x02);            //for 4-bit lcd intialization
+    delay_msec(5);
+    lcd_cout(0x28);     
+    delay_msec(5);
+    lcd_cout(0x0C);
+    delay_msec(5);                  
+}
+
+int lcd_cout(unsigned char ccod)           //for Lcd command
+{
+    unsigned char ccod_msb;
+    unsigned char ccod_lsb;
+
+    ccod_msb = ccod / 0x10;
+    ccod_lsb = ccod & 0x0F;
+
+    P7 = ccod_msb;              
+
+    P7 = ccod_msb | 0x20;            
+    delay_micro(2);
+    P7 = ccod_msb;      
+    delay_micro(2);
+    P7 = ccod_lsb;  
+    P7 = ccod_lsb | 0x20;   
+    delay_micro(2);
+    P7 = ccod_lsb;      
+    delay_micro(50);
+    return 0;
+}
+
+int lcd_dout(unsigned char dcod)            //for lcd_Data
+{
+    unsigned char dcod_msb;
+    unsigned char dcod_lsb;
+
+    dcod_msb = dcod / 0x10;
+    dcod_lsb = dcod & 0x0F;
+
+    P7 = dcod_msb | 0x10;   
+
+    P7 = dcod_msb | 0x30;   
+    delay_micro(2);
+    P7 = dcod_msb | 0x10;   
+    delay_micro(2);
+    P7 = dcod_lsb | 0x10;       
+    P7 = dcod_lsb | 0x30;   
+    delay_micro(2);
+    P7 = dcod_lsb | 0x10;   
+    delay_micro(50);     
+}
+
+void main()
+{    
+     lcd_init();
+     display1();
+    while (1)
+    {
+      WDT_Reset(); 
+    }
+}
+
+void display1(void)
+{                           
+    write_string(0, 7, one); 
+    delay_msec(100);
+    write_string(1, 0, one1); 
+    delay_msec(100);  
+    write_string(1, 7, one12); 
+    delay_msec(100);   
+}
+
+
+void write_string(uint_fast8_t row, uint_fast8_t col, unsigned const char  *str)
+  {
+     int x,y,z;                                               
+     if (row)
+        {
+     col |= 0x40;                    
+        } 
+     col |= 0x80;
+     lcd_cout (col); 
+
+     while (*str) lcd_dout(*str++);                                      
+}
