@@ -1,0 +1,28 @@
+void op_switich_upf(void){		          
+        if (upf == 1) {		  
+		set_cursor_position (1, 2);	
+	         if (temp >= 47 && temp < 57)  {			    
+	                 temp = temp+1;
+	         if(temp > 57) temp = 48;
+	                 lcd_dout(temp);
+	                 set_cursor_position (1, 2);	
+			 upf = 0;
+		 }
+			 set_cursor_position(1,3);	
+	      if (temp1 >= 47 && temp1 < 57) {
+	              temp1 = temp1 +1;
+	              lcd_dout(temp1);
+		      set_cursor_position(1,3);	
+			 upf = 0;	
+	                     }		
+	}
+	      if(upf == 1) {
+		      set_cursor_position(1,3);	
+	      if (temp1 >= 47 && temp1 < 57) {
+	              temp1 = temp1 +1;
+	              lcd_dout(temp1);
+	              set_cursor_position(1,3);	   
+		      upf = 0;
+	                    }	      
+	        }      	     
+}
