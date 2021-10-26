@@ -1,0 +1,49 @@
+ I am just going to assume that you have some main loop running that regularly checks the state of the button, 
+ preforms any necessary debouncing, and sets button to 1 whenever it detects that the button was pressed.
+ I will also assume that the cursor is not blinking by default, and that the button is only used to toggle the blinking of the cursor.
+
+Now just add a call to the following function in your main loop:
+(You might need to add #include <stdbool.h> at the top to get the bool type.)
+
+typedef int bool;
+#define true 1
+#define false 0
+bool blink_enabled = false;
+
+void update_blink(void)
+{
+  if (button == 1) {
+    // Button was pressed.
+    if (blink_enabled) {
+      // Turn off blinking.
+      lcd_cout(0x0c);
+      blink_enabled = false;
+    }
+    else {
+      // Turn on blinking.
+      set_cursor_position(1, 2);
+      lcd_cout(0x0f);
+      blink_enabled = true;
+    }
+    button = 0;
+  } 
+}
+
+
+Using boolean values in C
+C doesn't have any built-in boolean types. What's the best way to use them in C?
+
+Option 1 (C99 and newer)
+#include <stdbool.h>
+
+Option 2
+typedef enum { false, true } bool;
+
+Option 3
+typedef int bool;
+enum { false, true };
+
+Option 4(works for me)
+typedef int bool;
+#define true 1
+#define false 0
