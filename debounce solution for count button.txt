@@ -1,0 +1,55 @@
+question:
+Push_Button()
+{
+   if (button1 == 0)
+   {
+   count = count+1;
+   }
+         
+   if (count>4) count=1;
+   return (count);
+}
+
+answer:
+
+algorithm 1:
+If Button==Pressed
+ if nButtonState==Released
+  TimeDelay()
+  if Button==Pressed
+   nButtonState=Pressed
+   Counter
+  else
+   nButtonState=Released
+  endif
+ endif
+else
+  nButtonState=Released
+endif
+
+[OR]2:
+int count;
+
+Void Push_Button()
+{
+   static int1 pushed = false;
+
+   if (!pushed && !button1)  // Pressed
+   {
+      pushed = true;
+      if (++count > 4)
+        count = 1;
+   } else if (button1)  // Released
+      pushed = false;
+         
+}
+
+void main()
+{
+  while(true)
+  {
+    Push_button();
+  }
+}
+ 
+[OR]3:
