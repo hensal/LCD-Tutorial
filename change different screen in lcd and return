@@ -1,4 +1,5 @@
-Assuming you want every other button press to make it return to the initial screen and the other times you want to step to a new screen of the 3 screens you have defined:
+Assuming you want every other button press to make it return to the initial screen and 
+the other times you want to step to a new screen of the 3 screens you have defined:
 
 void change_screen(void) {
     if(modebutton) {
@@ -15,5 +16,26 @@ void change_screen(void) {
             case 2: display_screen3(); break;
             }
         }            
+    }
+}
+
+[OR]
+first press to display_screen1(), second press to display_screen2()
+and third press to display_screen3() and 4rth press return to display_screen1() and 5th press to display_screen2() and so on..
+
+void change_screen(void) {
+    static unsigned count = 0;
+
+    if(modebutton) {
+        delay(100);
+        modebutton = 0;       
+
+        switch(count) {
+        case 0: display_screen1(); break; // first   fourth  ...
+        case 1: display_screen2(); break; // second  fifth
+        case 2: display_screen3(); break; // third   sixth
+        }
+
+        count = (count + 1) % 3;   // 0,1,2 then 0,1,2 etc...
     }
 }
