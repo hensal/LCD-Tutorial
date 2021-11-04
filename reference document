@@ -1,1 +1,22 @@
 switch case : https://www.guru99.com/c-switch-case-statement.html
+
+Example:
+
+#include <stdio.h>
+intmain() {
+int variable = 5;               //variable must be constant
+switch (variable) {
+case3:
+printf("The value is 3");
+break;
+case4:
+printf("The value is 4");
+break;
+case5:
+printf("The value is 5");
+break;
+default:
+printf("The value is neither 3, 4 nor 5");
+    }
+return0;
+}
