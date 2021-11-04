@@ -1,0 +1,52 @@
+unsigned char temp[80] = "28900            ";	
+int first = 1;
+int second = 2;
+
+int set_cursor_position (uint_fast8_t row, uint_fast8_t col)                                                 
+	       {		 	 
+		  if (row)
+		                {
+			            col |= 0x40;				    
+				    } 
+				    col |= 0x80;
+				    lcd_cout (col); 	
+				    return 0;
+  } 
+
+int display1(void)
+{
+	unsigned char n;
+	unsigned char dsp_buf;
+		
+	lcd_l1(0);				
+	        for (n=0 ;n<16 ;n++) {
+		         dsp_buf = Data0[n];		
+		         lcd_dout(dsp_buf);		
+	           }  
+		   delay_msec(5);
+		   lcd_l2(0x80);
+		   for (n=0 ;n<16 ;n++) {
+		         dsp_buf = Data2[n];		
+		         lcd_dout(dsp_buf);	
+		   } 
+		   delay_msec(5);         //temp code
+		   lcd_l2(0x82);
+		   for (n=0 ;n<16 ;n++) {
+		   lcd_dout(temp[n]);
+		   }			   
+	return 0;
+}
+
+void op_switich_upf(void) 
+{	  	
+	if (upf == 1 && blink_enabled == true) {	    	     
+		if (second == 2) {	
+			temp[0]++;
+			lcd_dout(temp[0]);   
+				}			
+		if (second == 3) {			    
+			temp[1]++;
+			if(temp[1] > 0x39) temp[1] = 0x30 ;			
+			lcd_dout(temp[1]);   
+		}
+}
