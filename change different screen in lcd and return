@@ -39,3 +39,24 @@ void change_screen(void) {
         count = (count + 1) % 3;   // 0,1,2 then 0,1,2 etc...
     }
 }
+[OR] 
+BUt not return
+unsigned int count = 0;
+void op_switich_mdoef(void)
+{	
+	if (modef == 1) {		                                               // when button is pressed       
+              if     (count == 0) {                                                    //   increment count and
+	             count++;
+		     delay_msec(100);
+                     dispset_titl1();                                                   //   perform   function
+	             modef=0;	         
+        }  else if (count == 1) {                                                  // on second press
+                     count++;                                                           //   increment count and
+	             delay_msec(100);
+                     dispset_titl2();                                                 //   perform another function,
+	             modef=0;
+        } else if (count == 2) {                                                  // on third press
+	             lcd_cout(0x01);        
+        } 
+    } 
+}
