@@ -1,0 +1,75 @@
+typedef int bool;
+#define true 1
+#define false 0
+bool blink_enabled = false; 
+
+enum{
+    LCD1,
+    LCD2,
+    LCD3
+}LCD_NUM;
+bool SwitchLCD_flag = false;
+
+void op_switich_mdoef(void)                      //change the screen
+{	
+	if (modef == 1) {	    
+		
+	  SwitchLCD_flag = !SwitchLCD_flag;
+          switch(SwitchLCD_flag) {
+	             case 0:     
+	                                lcd_cout(0x01); 
+					LCD_NUM = LCD1;
+	                               dispset_titl2(); 
+				       break;
+		     case 1:     
+				       lcd_cout(0x01);   
+				       LCD_NUM = LCD2;
+				       dispset_titl1(); 
+		                       break;
+		 		   
+                 }  
+	            //count = (count+1)%4;
+		    //SwitchLCD_flag =SwitchLCD_flag;
+        }  modef=0;
+}
+
+//**********************************************************************
+void op_switich_upf(void) 
+{	  	
+	if (upf == 1 && blink_enabled == true) {	    	     
+		if (second == 2) {	
+			switch(LCD_NUM) {
+				case LCD1:
+				temp++;
+				lcd_dout(temp);   
+				break;
+				case LCD2:
+				temp5++;
+				lcd_dout(temp5);  
+				break;			 
+		}	}			
+		if (second == 3) {			    
+			temp1++;
+			if(temp1 > 0x39) temp1 = 0x30 ;
+			if(temp1 == 0x30) temp = temp +1;
+			lcd_dout(temp1);   
+		}
+		if (second == 4) {			    
+			temp2++;
+			if(temp2 > 0x39) temp2 = 0x30 ;
+			lcd_dout(temp2);   
+		}
+		if (second == 5) {			    
+			temp3++;
+			if(temp3 > 0x39) temp3 = 0x30 ;
+			lcd_dout(temp3);   
+		}
+		if (second == 6) {			    
+			temp4++;
+			if(temp4 > 0x39) temp4 = 0x30 ;
+			lcd_dout(temp4);   
+		}
+		set_cursor_position (1, second);				 
+		upf = 0;
+	}
+}
