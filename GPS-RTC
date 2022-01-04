@@ -1,0 +1,128 @@
+https://simple-circuit.com/pic18f4550-gps-real-time-clock-neo-6m/
+
+/**************************************************************************************
+ 
+ GPS real time clock using PIC18F4550 and NEO-6M GPS module
+ C Code for CCS C compiler
+ Internal oscillator used @ 8MHz
+ This is a free software with NO WARRANTY.
+ http://simple-circuit.com/
+ 
+***************************************************************************************/
+ 
+ 
+#define time_offset   3600   // define a clock offset of 3600 seconds (1 hour) ==> UTC + 1
+ 
+//LCD module connections
+#define LCD_RS_PIN PIN_D0
+#define LCD_RW_PIN PIN_D1
+#define LCD_ENABLE_PIN PIN_D2
+#define LCD_DATA4 PIN_D3
+#define LCD_DATA5 PIN_D4
+#define LCD_DATA6 PIN_D5
+#define LCD_DATA7 PIN_D6
+//End LCD module connections
+ 
+ 
+#include <18F4550.h>
+#device PASS_STRINGS = IN_RAM
+#fuses NOMCLR, INTRC_IO, NOWDT, NOPROTECT, NOLVP
+#use delay(clock = 8MHz)
+#use fast_io(D)
+#use RS232(UART1, BAUD = 9600, ERRORS)   // UART configuration & initialization
+// include CCS C LCD library
+#include <lcd.c>
+// include GPS library source file (GPS_Lib.c)
+#include <GPS_Lib.c>
+// include CCS C time library
+#include <time.h>
+#include <time.c>
+ 
+ 
+// CCS C time library variables
+time_t unix_time;
+struct_tm utc_time, *my_time;
+// other variables
+char time_c[] = "TIME:   :  :  ";
+char date_c[] = "DATE:   -  -20  ";
+ 
+ 
+void print_wday(int8 wday)
+{
+  lcd_gotoxy(6, 2);
+  switch(wday)
+  {
+    case 0:  lcd_putc(" SUNDAY  ");   break;
+    case 1:  lcd_putc(" MONDAY  ");   break;
+    case 2:  lcd_putc(" TUESDAY ");   break;
+    case 3:  lcd_putc("WEDNESDAY");   break;
+    case 4:  lcd_putc("THURSDAY ");   break;
+    case 5:  lcd_putc(" FRIDAY  ");   break;
+    default: lcd_putc("SATURDAY ");
+  }
+ 
+}
+ 
+// main function
+void main(void) {
+ 
+  setup_oscillator(OSC_8MHZ);                // Set internal oscillator to 8MHz
+ 
+  lcd_init();             // initialize LCD module
+  lcd_gotoxy(2, 1);       // go to column 2, row 1
+  lcd_putc("GPS CLOCK (UTC+1)");
+ 
+  while(TRUE)
+  {
+ 
+    if(kbhit())
+    {
+      if(GPSRead())
+      {
+        // read UTC time and date and save them to utc_time structure
+        utc_time.tm_hour = GPSHour();
+        utc_time.tm_min  = GPSMinute();
+        utc_time.tm_sec  = GPSSecond();
+        // adjust values to be time.h compatible
+        utc_time.tm_mday = GPSDay();          // month day 1-31
+        utc_time.tm_mon  = GPSMonth() - 1;    // month 0-11
+        utc_time.tm_year = GPSYear() + 100;   // year starting at 1900
+        
+        // get unix time
+        unix_time = mktime(&utc_time);
+ 
+        // add the offset (in seconds) to the unix time
+        unix_time += time_offset;
+ 
+        // get the local time
+        my_time = localtime(&unix_time);
+ 
+        time_c[6]  = my_time->tm_hour / 10 + '0';
+        time_c[7]  = my_time->tm_hour % 10 + '0';
+        time_c[9]  = my_time->tm_min  / 10 + '0';
+        time_c[10] = my_time->tm_min  % 10 + '0';
+        time_c[12] = my_time->tm_sec  / 10 + '0';
+        time_c[13] = my_time->tm_sec  % 10 + '0';
+ 
+        date_c[6]  =  my_time->tm_mday / 10 + '0';
+        date_c[7]  =  my_time->tm_mday % 10 + '0';
+        date_c[9]  = (my_time->tm_mon + 1)  / 10 + '0';
+        date_c[10] = (my_time->tm_mon + 1)  % 10 + '0';
+        date_c[14] = (my_time->tm_year / 10) % 10 + '0';
+        date_c[15] =  my_time->tm_year  % 10 + '0';
+        
+        // print time & date
+        print_wday(my_time->tm_wday);          // print day of the week
+        lcd_gotoxy(23, 1);                     // go to column 3 row 3
+        printf(lcd_putc, time_c);              // print time (HH:MM:SS)
+        lcd_gotoxy(23, 2);                     // go to column 3 row 4
+        printf(lcd_putc, date_c);              // print date (DD-MM-YYYY)
+ 
+      }
+ 
+    }
+ 
+  }
+ 
+}
+// End of code.
