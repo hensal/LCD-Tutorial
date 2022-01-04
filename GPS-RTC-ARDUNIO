@@ -1,0 +1,93 @@
+https://www.engineersgarage.com/gps-clock-using-arduino/
+
+#include<LiquidCrystal.h>
+LiquidCrystal lcd(2, 3, 4, 5, 6, 7);
+
+char str[70];
+char *test="$GPRMC";
+
+char time[6];
+char date[6];
+
+int temp,i;
+
+void setup()
+{
+  lcd.begin(16,2);
+  Serial.begin(4800);
+  lcd.setCursor(0,0);
+  lcd.print("GPS Update Clock");
+  lcd.setCursor(0,1);
+  lcd.print(" By Saddam Khan ");
+  delay(3000);
+}
+
+void loop()
+{
+  int j=0,k=0;
+  //temp=1;
+  if (temp==1)
+  {
+    for(int i=7;i<13;i++)          //extract latitude from string
+    {
+      time[j]=str[i];
+      j++;
+    }
+   
+    for(int i=57;i<63;i++)
+    {
+      date[k]=str[i];
+      k++;
+    }
+    lcd.clear();
+    lcd.setCursor(0,0);        //display latitude and longitude on 16X2 lcd display 
+    lcd.print("Date: ");
+    for(int i=0;i<2;i++)
+    lcd.print(date[i]);
+    lcd.print("/");
+    for(int i=2;i<4;i++)
+    lcd.print(date[i]);
+    lcd.print("/");
+    for(int i=4;i<6;i++)
+    lcd.print(date[i]);
+    
+     lcd.setCursor(0,1);
+     lcd.print("Time: ");
+    for(int i=0;i<2;i++)
+    lcd.print(time[i]);
+    lcd.print(":");
+    for(int i=2;i<4;i++)
+    lcd.print(time[i]);
+    lcd.print(":");
+    for(int i=4;i<6;i++)
+    lcd.print(time[i]);
+    delay(100);
+    temp=0;
+    j=0;
+    i=0;
+    k=0;
+  }
+}
+
+
+void serialEvent()
+{
+  while (Serial.available())            //Serial incomming data from GPS
+  {
+    char inChar = (char)Serial.read();
+     str[i]= inChar;                    //store incomming data from GPS to temparary string str[]
+     i++;
+   //  lcd.print(inChar);
+     if (i < 7)                      
+     {
+      if(str[i-1] != test[i-1])         //check for right string
+      {
+        i=0;
+      }
+     }
+    if(i >=65)
+    {
+     temp=1;
+    }
+  }
+}
