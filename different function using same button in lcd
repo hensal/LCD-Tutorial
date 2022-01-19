@@ -1,8 +1,14 @@
+typedef int bool;
+#define true 1
+#define false 0
+bool blink_enabled = false; 
+bool setmode_in = 0;
+
 void display_sd_setting(unsigned char page_num) {
 	unsigned char n;
 	unsigned char titl_l1[32] = "STATION NUMBER   *  ";
 	unsigned char titl_l2[32] = " 123456                    ";
-	unsigned char key_mode,setmode_in,flag;  		
+	
 //タイトル表示
 	for (n=0 ;n<20 ;n++) {
 		dsp_buff1[n] = titl_l1[n];
@@ -14,16 +20,20 @@ void display_sd_setting(unsigned char page_num) {
 	      case KEY_UP: 
 	           if (setmode_in == 0){	                             
 		   lcd_page = 0x0021;                                       //ｷｰ入力ｸﾘﾔ		
-		   }
-		   if (setmode_in == 1){	
+		   } else
+		   {	
 	           lcd_cout(0x01);
 		   }
 		break;
-		case KEY_SET:  		 	 
+		case KEY_SET:  
+		if(setmode_in==0) {
 		 key_cursol = 2;
                  lcdLocate(1,key_cursol);			          // Turn on blinking.
              	 lcd_cout(0x0f); 
-		 setmode_in = 1;				
+		 setmode_in = 1;	
+		} else {
+			 setmode_in = 0;	
+		}
 		break;
 	        default: break;
 	 key_code = 0;
