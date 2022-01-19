@@ -1,0 +1,32 @@
+void display_sd_setting(unsigned char page_num) {
+	unsigned char n;
+	unsigned char titl_l1[32] = "STATION NUMBER   *  ";
+	unsigned char titl_l2[32] = " 123456                    ";
+	unsigned char key_mode,setmode_in,flag;  		
+//タイトル表示
+	for (n=0 ;n<20 ;n++) {
+		dsp_buff1[n] = titl_l1[n];
+		dsp_buff2[n] = titl_l2[n];
+	}
+	bcd2d_disp(1,18,page_num);
+//
+         switch(key_code) {
+	      case KEY_UP: 
+	           if (setmode_in == 0){	                             
+		   lcd_page = 0x0021;                                       //ｷｰ入力ｸﾘﾔ		
+		   }
+		   if (setmode_in == 1){	
+	           lcd_cout(0x01);
+		   }
+		break;
+		case KEY_SET:  		 	 
+		 key_cursol = 2;
+                 lcdLocate(1,key_cursol);			          // Turn on blinking.
+             	 lcd_cout(0x0f); 
+		 setmode_in = 1;				
+		break;
+	        default: break;
+	 key_code = 0;
+	 }
+	dsp_buff_disp();
+}
