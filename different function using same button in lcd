@@ -147,6 +147,7 @@ void display_sd_setting(unsigned char page_num) {
 	 }	
 }
 [condition1]:working 99%. if blink and same button is pressed value change and when not blinking and the same button is pressed display changes.
+unsigned char setmode_in = 0; //global declaration
 void display_sd_setting(unsigned char page_num) {
 	unsigned char n;	
 	//unsigned char b[3] = "[]"; 
