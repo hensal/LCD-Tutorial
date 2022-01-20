@@ -81,3 +81,68 @@ void display_sd_setting(unsigned char page_num) {
 	 }
 	dsp_buff_disp();
 }
+
+[OR]
+working with switch case:
+void display_sd_setting(unsigned char page_num) {
+	unsigned char n;	
+//タイトル表示
+	for (n=0 ;n<20 ;n++) {
+		dsp_buff1[n] = titl_l11[n];
+		dsp_buff2[n] = titl_l22[n];
+	}
+	bcd2d_disp(1,18,page_num);
+	dsp_buff_disp();
+//
+         switch(key_code) {
+	      case KEY_UP: 
+	           if (setmode_in == 0){	                             
+		   lcd_page = 0x0021;                                       //ｷｰ入力ｸﾘﾔ		
+		   } else
+		   {	
+	            switch( key_cursol) {		             
+			case 1:  	
+				      titl_l22[1]++;	
+				      if(titl_l22[1] > 0x39) titl_l22[1] = 0x30;	     		     
+				      break;	
+			case 2:  	
+				      titl_l22[2]++;	
+				      if(titl_l22[2] > 0x39) titl_l22[2] = 0x30 ;				    
+				      break;
+			case 3:    
+				      titl_l22[3]++;	
+				      if(titl_l22[3] > 0x39) titl_l22[3] = 0x30 ;				    
+				      break;
+			case 4:    
+				      titl_l22[5]++;	
+				      if(titl_l22[5] > 0x39) titl_l22[5] = 0x30 ;				      
+				      break;	
+			case 5:    
+				      titl_l22[6]++;	
+				      if(titl_l22[6] > 0x39) titl_l22[6] = 0x30 ;
+				      lcd_cout(0x0f);
+				      break;
+			case 6:    
+				      titl_l22[7]++;	
+				      if(titl_l22[7] > 0x39) titl_l22[7] = 0x30 ;
+				      lcd_cout(0x0f);
+				      break;			      
+		        default:   break;	
+		}		
+		key_code = 0;
+	}	   
+		break;
+		case KEY_SET:  
+		if(setmode_in==0) {
+		 key_cursol = 2;
+                 lcdLocate(1,key_cursol);			          // Turn on blinking.
+             	 lcd_cout(0x0f); 
+		 setmode_in = 1;	
+		} else {
+			 setmode_in = 0;	
+		}
+		break;
+	        default: break;
+	 key_code = 0;
+	 }	
+}
