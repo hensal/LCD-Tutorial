@@ -108,8 +108,7 @@ void display_sd_setting(unsigned char page_num) {
 [condition1]:working 99%. if blink and same button is pressed value change and when not blinking and the same button is pressed display changes.
 unsigned char setmode_in = 0; //global declaration
 void display_sd_setting(unsigned char page_num) {
-	unsigned char n;	
-	//unsigned char b[3] = "[]"; 
+	unsigned char n;		
 //タイトル表示
 	for (n=0 ;n<20 ;n++) {
 		dsp_buff1[n] = titl_l11[n];
@@ -117,6 +116,7 @@ void display_sd_setting(unsigned char page_num) {
 	}
 	bcd2d_disp(1,18,page_num);
 	dsp_buff_disp();
+	lcdLocate(1,key_cursol);
 //
          switch(key_code) {
 	      case KEY_UP: 
@@ -131,11 +131,11 @@ void display_sd_setting(unsigned char page_num) {
 				      break;	
 			case 2:  	
 				      titl_l22[2]++;	
-				      if(titl_l22[2] > 0x39) titl_l22[2] = 0x30 ;				    
+				      if(titl_l22[2] > 0x39) titl_l22[2] = 0x30;				    
 				      break;
 			case 3:    
 				      titl_l22[3]++;	
-				      if(titl_l22[3] > 0x39) titl_l22[3] = 0x30 ;				    
+				      if(titl_l22[3] > 0x39) titl_l22[3] = 0x30;				    
 				      break;
 			case 4:    
 				      titl_l22[5]++;	
@@ -160,11 +160,11 @@ void display_sd_setting(unsigned char page_num) {
 		if(blink_enabled == true) {			         
              	 lcd_cout(0x0c);
 		 blink_enabled = false;
-		  setmode_in = 0;
+		 setmode_in = 0;
 		} else {
 			key_cursol = 1;
-             		lcdLocate(1,key_cursol);			
-             		lcd_cout(0x0f);
+             		lcd_cout(0x0F);
+			lcdLocate(1,key_cursol);				
              		blink_enabled = true;
 			setmode_in = 1;	
 		}
@@ -172,6 +172,16 @@ void display_sd_setting(unsigned char page_num) {
 		case KEY_MODE:
 		  setmode_in = 0;
 		break;
+		case KEY_LEFT:
+		                if (key_cursol <= 0) key_cursol = 18;		
+		                else key_cursol = key_cursol - 1;
+		                lcd_cout(0xc0 + key_cursol);	  
+		                break;
+		case KEY_RIGHT:
+		                if (key_cursol >= 18) key_cursol = 0;
+		                else key_cursol = key_cursol + 1;
+		                lcd_cout(0xc0 + key_cursol);	            
+		                break;		
 	        default: break;	
 	     }	
 	 key_code = 0; 
